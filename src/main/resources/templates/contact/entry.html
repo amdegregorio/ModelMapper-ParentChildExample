@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link th:href="@{/main-style.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+<title>Enter Contacts</title>
+</head>
+<body>
+<h1>Contact Entry</h1>
+<div class="input-form">
+<form th:action="@{/__${action}__}" th:object="${contactDto}" method="post">
+   <input th:field="*{id}" id="id" type="hidden" th:if="${action}=='contact/edit'"/>
+   <div>
+     <label class="active" for="firstName">First Name</label>
+	 <input th:field="*{firstName}" id="firstName" type="text"/>
+   </div>
+   <div>
+     <label class="active" for="lastName">Last Name</label>
+     <input th:field="*{lastName}" id="lastName" type="text"/>
+   </div>
+   <div>
+     <label class="active" for="title">Title</label>
+     <input th:field="*{title}" id="title" type="text"/>
+   </div>
+   <div>
+     <label class="active" for="company">Company</label>
+     <input th:field="*{company}" id="company" type="text"/>
+   </div>
+   <div>
+     <label class="active" for="notes">Notes</label>
+     <textarea th:field="*{notes}" id="notes" rows="3" cols="80"></textarea>
+   </div>
+   <div class="grouping">
+     Phone Numbers
+     <hr>
+   </div>
+   <div>
+     <ul>
+        <li th:each="number, stat : *{phoneNumbers}" class="childDisplay">
+           <div class="side-by-side">
+             <input th:field="*{phoneNumbers[__${stat.index}__].id}" th:id="${'id-'+stat.index}" type="hidden" th:if="${action}=='contact/edit'"/>
+             <label class="active" th:for="*{phoneNumbers[__${stat.index}__].type}">Type</label>
+	         <input th:field="*{phoneNumbers[__${stat.index}__].type}" th:id="${'type-'+stat.index}" type="text"/>
+	       </div>
+	       <div class="side-by-side">
+	         <label class="active" th:for="*{phoneNumbers[__${stat.index}__].phoneNumber}">Number</label>
+	         <input th:field="*{phoneNumbers[__${stat.index}__].phoneNumber}" th:id="${'phoneNumber-'+stat.index}" type="tel"/>
+           </div>
+           <div class="side-by-side">
+             <label class="active" th:for="*{phoneNumbers[__${stat.index}__].deleted}">Delete</label>
+             <input th:field="*{phoneNumbers[__${stat.index}__].deleted}" th:id="${'deleted-'+stat.index}" type="checkbox"/>
+           </div>
+        </li>
+     </ul>
+   </div>
+   <div>
+     <button type="submit" name="save">Save</button>
+     <button type="submit" name="cancel" formnovalidate="formnovalidate">Cancel</button>
+   </div>
+</form>
+</div>
+</body>
+</html>

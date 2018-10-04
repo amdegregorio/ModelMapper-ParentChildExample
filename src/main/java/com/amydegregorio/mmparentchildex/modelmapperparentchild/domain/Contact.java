@@ -29,7 +29,7 @@ public class Contact {
    private String title;
    private String company;
    private String notes;
-   @OneToMany(mappedBy="contact", fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
+   @OneToMany(mappedBy="contact", cascade=CascadeType.ALL, orphanRemoval=true)
    private List<PhoneNumber> phoneNumbers;
    
    /**

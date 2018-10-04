@@ -94,14 +94,7 @@ public class ContactController {
          return "contact/entry";
       }
       
-      System.out.println("Dto: " + contactDto.toString());
-      
       Contact contact = modelMapper.map(contactDto, Contact.class);
-      System.out.println("Domain: " + contact.toString());
-      for (PhoneNumber number: contact.getPhoneNumbers()) {
-         System.out.println(number.toString());
-      }
-      
       contactRepository.save(contact);
       return "redirect:/";
    }
@@ -159,10 +152,7 @@ public class ContactController {
          //Add an empty phone number for adding a new number
          context.getDestination().getPhoneNumbers().add(new PhoneNumberDto());
          
-         System.out.println(context.getSource().getPhoneNumbers().size());
-         
          for (PhoneNumber number : context.getSource().getPhoneNumbers()) {
-            System.out.println("Source Number: " + number.toString());
             context.getDestination().getPhoneNumbers().add(new PhoneNumberDto(number.getId(), number.getType(), number.getNumber()));
          }
          return context.getDestination();

@@ -115,6 +115,7 @@ public class ContactController {
       Contact contact = contactRepository.getOne(id);
       System.out.println("Domain: " + contact.toString());
       contactDto = modelMapper.map(contact, ContactDto.class);
+      contactDto.getPhoneNumbers().add(new PhoneNumberDto());
       model.addAttribute("contactDto", contactDto);
       return "contact/entry";
    }
@@ -179,6 +180,7 @@ public class ContactController {
             }
          } else {
             Contact existing = contactRepository.getOne(context.getSource().getId());
+            context.getDestination().getPhoneNumbers().clear();
             
             for (PhoneNumberDto phoneNumDto : context.getSource().getPhoneNumbers()) {
                boolean found = false;
